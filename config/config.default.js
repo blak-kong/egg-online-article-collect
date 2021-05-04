@@ -1,9 +1,8 @@
+"use strict";
+
 const path = require("path");
-const host = require("../host");
-
+const DATA_CONFIG = require("../dataConfig");
 /* eslint valid-jsdoc: "off" */
-
-("use strict");
 
 const ENV_database =
   process.env.NODE_ENV === "pord"
@@ -41,7 +40,8 @@ module.exports = (appInfo) => {
 
   config.sequelize = {
     dialect: "mysql",
-    host: host,
+    host: DATA_CONFIG.host,
+    password: DATA_CONFIG.pass,
     port: 3306,
     database: ENV_database,
   };

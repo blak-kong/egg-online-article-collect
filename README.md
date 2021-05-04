@@ -1,5 +1,3 @@
-# online-article
-
 《网络文章收藏系统》
 
 痛点：日常在网上浏览技术文章时，偶尔会用浏览器收藏，偶尔会使用技术平台、博客平台的帐号收藏。但实际要看的时候，却常常难以找到。
@@ -18,14 +16,16 @@
 
 ## 未上传的文件
 
-根目录 `host.js`：host 字段应填写 mysql 服务器地址
+根目录 `dataConfig.js` 是数据库的配置文件，此处填写自己的 mysql 地址和密码
 
 ```javascript
 const host = "";
-module.exports = host;
+const pass = "";
+
+module.exports = { host, pass };
 ```
 
-`config/config.json`： host 字段应填写 mysql 服务器地址
+`config/config.json`：可填写服务器的详细配置
 
 ```javascript
 {
