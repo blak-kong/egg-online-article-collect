@@ -14,12 +14,9 @@ run
 _site 
 logs 
 .vscode 
-config/manifest.json 
-app/view/* 
 !app/view/layout.html 
 !app/view/.gitkeep
 package-lock.json
 
-host.js
-config/config.json
+database/config.json
 dataConfig.js
