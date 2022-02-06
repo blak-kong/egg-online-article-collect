@@ -1,12 +1,11 @@
-"use strict";
+'use strict';
 
-module.exports = (app) => {
+module.exports = app => {
   const { STRING, INTEGER, DATE } = app.Sequelize;
 
-  const Classify = app.model.define("classify", {
+  const Classify = app.model.define('classify', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-    name: STRING(50),
-    tag: STRING,
+    classify: STRING,
     created_at: DATE,
     updated_at: DATE,
     deleted_at: DATE,

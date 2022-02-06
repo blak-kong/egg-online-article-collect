@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -9,7 +9,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     const { INTEGER, DATE, STRING } = Sequelize;
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable('users', {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       name: STRING(30),
       email: STRING(50),
@@ -28,6 +28,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable('users');
   },
 };

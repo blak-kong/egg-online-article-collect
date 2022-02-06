@@ -3,14 +3,116 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.7/theme-chalk/index.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/base.css">
+    <link rel="stylesheet" href="./static/css/index.css">
     <title><%=title%></title>
   </head>
   <body>
-    <div>我是文章系统首页</div>
+    <div>
+      <div id="app">
+        <div class="layout">
+          <!-- 搜索栏 -->
+          <div class="header-wrapper">
+            <div class="search-panel">
+              <el-input class="input" v-model="params.search" prefix-icon="el-icon-search" placeholder="请输入文章标题"></el-input>
+              <el-button  type="default" style="margin-left:20px;width: 100px;">搜索</el-button>
+            </div>
+            <h2>收藏文章标签</h2>
+            <div class="classify">
+              <el-tag
+                style="margin-right: 10px;"
+                :key="item.id"
+                v-for="item in tagArray"
+                closable
+                :disable-transitions="false"
+                @close="handleTagClose(item)">
+                {{item.tag}}
+              </el-tag>
+              <el-input
+                class="input-new-tag"
+                v-if="inputVisible"
+                v-model="tagInputValue"
+                ref="saveTagInput"
+                size="small"
+                @keyup.enter.native="handleInputConfirm"
+              >
+              </el-input>
+              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+            </div>
+          </div>
+
+           <!-- 文章列表 -->
+           <div class="main">
+            <div class="star"></div>
+            <div class="article"></div>
+           </div>
+        </div>
+      </div>
+    </div>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/dayjs/1.10.3/dayjs.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.7/index.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.7/locale/zh-CN.min.js"></script>
     <script>
-    
+      new Vue({
+        el: '#app',
+        data: function() {
+          return { 
+            inputVisible: false,
+            params: {
+              search: '',
+              tag: '',
+              classify: ''
+            },
+            tagInputValue: '',
+            tagArray: [],
+            classifyArray: []
+          }
+        },
+        mounted() {
+          this.getTags()
+        },
+        methods: {
+          async getTags() {
+            let res = await axios.get('/api/tag');
+            if (res.status === 200) {
+              this.tagArray = res.data
+            }
+          },
+          async addTags(tag) {
+            let res = await axios.post('/api/tag', {
+              tag
+            })
+            console.log(res)
+            this.getTags()
+          },
+          showInput() {
+            this.inputVisible = true;
+            this.tagInputValue = '';
+            this.$nextTick(_ => {
+              this.$refs.saveTagInput.$refs.input.focus();
+            });
+          },
+          handleTagClose(val) {
+            console.log("close", val)
+          },
+          handleInputConfirm() {
+            let tagInputValue = this.tagInputValue;
+            let array = []
+            this.tagArray.map(item => array.push(item.tag))
+            this.inputVisible = false;
+            if (tagInputValue.length > 1) {
+              if (!array.includes(tagInputValue)) {
+                this.addTags(tagInputValue);
+              } else {
+                this.$message.warning("标签已存在")
+              }
+            }
+          }
+        },
+      })
     </script>
   </body>
 </html>

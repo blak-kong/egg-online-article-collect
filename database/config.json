@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "root",
-    "password": null,
-    "database": "egg_online_article_dev",
+    "username": "egg_mark",
+    "password": "lizhiwen",
+    "database": "egg_mark",
     "host": "47.103.12.22",
     "dialect": "mysql",
     "freezeTableName": true,
@@ -10,9 +10,9 @@
     "paranoid": true
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "egg_online_article_test",
+    "username": "egg_mark",
+    "password": "lizhiwen",
+    "database": "egg_mark",
     "host": "47.103.12.22",
     "dialect": "mysql",
     "freezeTableName": true,
@@ -20,9 +20,9 @@
     "paranoid": true
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "egg_online_article",
+    "username": "egg_mark_pord",
+    "password": "lizhiwen",
+    "database": "egg_mark_pord",
     "host": "47.103.12.22",
     "dialect": "mysql",
     "freezeTableName": true,

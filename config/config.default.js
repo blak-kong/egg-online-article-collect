@@ -1,18 +1,18 @@
-"use strict";
+'use strict';
 
-const path = require("path");
-const DATA_CONFIG = require("../dataConfig");
+const path = require('path');
+const DATA_CONFIG = require('../dataConfig');
 /* eslint valid-jsdoc: "off" */
 
 const ENV_database =
-  process.env.NODE_ENV === "pord"
-    ? "egg_online_article"
-    : "egg_online_article_dev";
+  process.env.NODE_ENV === 'pord'
+    ? 'egg_mark_pord'
+    : 'egg_mark';
 
 /**
  * @param {Egg.EggAppInfo} appInfo app info
  */
-module.exports = (appInfo) => {
+module.exports = appInfo => {
   /**
    * built-in config
    * @type {Egg.EggAppConfig}
@@ -27,11 +27,11 @@ module.exports = (appInfo) => {
   };
 
   // use for cookie sign key, should change to your own and keep security
-  config.keys = appInfo.name + "_lzw_546598185";
+  config.keys = appInfo.name + '_lzw_546598185';
 
   // add your middleware config here
   // 配置需要的中间件，数组顺序即为中间件的加载顺序
-  config.middleware = ["gzip"];
+  config.middleware = [ 'gzip' ];
 
   // 配置 gzip 中间件的配置
   config.gzip = {
@@ -39,7 +39,7 @@ module.exports = (appInfo) => {
   };
 
   config.sequelize = {
-    dialect: "mysql",
+    dialect: 'mysql',
     host: DATA_CONFIG.host,
     password: DATA_CONFIG.pass,
     port: 3306,
@@ -53,21 +53,21 @@ module.exports = (appInfo) => {
   };
 
   config.view = {
-    mapping: { ".html": "ejs" }, // 遇到html的时候，使用ejs模板引擎
+    mapping: { '.html': 'ejs' }, // 遇到html的时候，使用ejs模板引擎
   };
 
   config.static = {
-    prefix: "/static/",
+    prefix: '/static/',
     dir: [
-      path.join(appInfo.baseDir, "static"),
-      path.join(appInfo.baseDir, "publicData"),
+      path.join(appInfo.baseDir, 'static'),
+      // path.join(appInfo.baseDir, 'publicData'),
     ], // 多静态文件入口
   };
 
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
-    myAppName: "egg_online_article",
+    myAppName: 'egg_online_article',
     cluster: {
       listen: {
         port: 8001,
@@ -80,3 +80,4 @@ module.exports = (appInfo) => {
     ...userConfig,
   };
 };
+

@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 // app/controller/Tag.js
-const Controller = require("egg").Controller;
+const Controller = require('egg').Controller;
 
 function toInt(str) {
-  if (typeof str === "number") return str;
+  if (typeof str === 'number') return str;
   if (!str) return str;
   return parseInt(str, 10) || 0;
 }
@@ -28,37 +28,37 @@ class TagController extends Controller {
   // 默认post
   async create() {
     const ctx = this.ctx;
-    const { name, classify } = ctx.request.body;
+    const { tag } = ctx.request.body;
 
-    const tag = await ctx.model.Tag.create({ name, classify });
-    ctx.status = 201;
-    ctx.body = tag;
+    const tagModel = await ctx.model.Tag.create({ tag });
+    ctx.status = 200;
+    ctx.body = tagModel;
   }
 
   async update() {
     const ctx = this.ctx;
     const id = toInt(ctx.params.id);
-    const tag = await ctx.model.Tag.findByPk(id);
-    if (!tag) {
+    const tagModel = await ctx.model.Tag.findByPk(id);
+    if (!tagModel) {
       ctx.status = 404;
       return;
     }
 
-    const { name, classify } = ctx.request.body;
-    await tag.update({ name, classify });
-    ctx.body = tag;
+    const { tag } = ctx.request.body;
+    await tagModel.update({ tag });
+    ctx.body = tagModel;
   }
 
   async destroy() {
     const ctx = this.ctx;
     const id = toInt(ctx.params.id);
-    const tag = await ctx.model.Tag.findByPk(id);
-    if (!tag) {
+    const tagModel = await ctx.model.Tag.findByPk(id);
+    if (!tagModel) {
       ctx.status = 404;
       return;
     }
 
-    await tag.destroy();
+    await tagModel.destroy();
     ctx.status = 200;
   }
 }

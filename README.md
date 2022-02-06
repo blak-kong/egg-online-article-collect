@@ -16,7 +16,7 @@
 
 ## 未上传的文件
 
-根目录 `dataConfig.js` 是数据库的配置文件，此处填写自己的 mysql 地址和密码
+根目录新建 `dataConfig.js` 是数据库的配置文件，此处填写自己的 mysql 地址和密码
 
 ```javascript
 const host = "";
@@ -25,7 +25,7 @@ const pass = "";
 module.exports = { host, pass };
 ```
 
-`config/config.json`：可填写服务器的详细配置
+`database/config.json`：可填写服务器的详细配置
 
 ```javascript
 {

@@ -1,17 +1,5 @@
-"use strict";
+'use strict';
 
-/** @type Egg.EggPlugin */
-module.exports = {
-  // had enabled by egg
-  // static: {
-  //   enable: true,
-  // }
-  sequelize: {
-    enable: true,
-    package: "egg-sequelize",
-  },
-  ejs: {
-    enable: true,
-    package: "egg-view-ejs",
-  },
-};
+exports.sequelize = { enable: true, package: 'egg-sequelize' };
+exports.ejs = { enable: true, package: 'egg-view-ejs' };
+exports.vuessr = { enable: true, package: 'egg-view-vue-ssr' };
