@@ -6,6 +6,7 @@ module.exports = app => {
   const Classify = app.model.define('classify', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     classify: STRING,
+    number: INTEGER,
     created_at: DATE,
     updated_at: DATE,
     deleted_at: DATE,
