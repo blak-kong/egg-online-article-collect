@@ -44,9 +44,49 @@
 
            <!-- 文章列表 -->
            <div class="main">
-            <div class="star"></div>
-            <div class="article"></div>
+            <div class="star">
+              <div style="width: 100%;height: 60px;display: flex;align-items: center;justify-content: center;">
+                <el-button size="small" type="primary" style="width: 80%;" @click="addArticle">新增收藏文章</el-button>
+              </div>
+            </div>
+            <div class="article">
+              <div class="article-item" v-for="item of articleArray">
+                <h4>{{item.name}}</h4>
+                <p>{{ item.describe }}</p>
+              </div>
+            </div>
            </div>
+
+           <!-- 弹窗 -->
+           <el-dialog
+           size="small"
+            title="新增收藏文章"
+            :visible.sync="addArticleDialogVisible"
+            width="50%"
+            :before-close="addArticleHandleClose">
+
+            <el-form size="small" ref="artcleForm" :model="articleParams" label-width="80px">
+              <el-form-item label="文章名称">
+                <el-input v-model="articleParams.name"></el-input>
+              </el-form-item>
+              <el-form-item label="文章地址">
+                <el-input v-model="articleParams.url"></el-input>
+              </el-form-item>
+              <el-form-item label="文章描述">
+                <el-input v-model="articleParams.describe"></el-input>
+              </el-form-item>
+              <el-form-item label="文章标签">
+                <el-checkbox-group v-model="articleParams.tag">
+                  <el-checkbox :label="item.tag" v-for="item of tagArray"></el-checkbox>
+                </el-checkbox-group>
+              </el-form-item>
+            </el-form>
+
+            <span slot="footer" class="dialog-footer">
+              <el-button size="small" @click="addArticleHandleClose">取 消</el-button>
+              <el-button size="small" type="primary" @click="addArticleConfirm">确 定</el-button>
+            </span>
+          </el-dialog>
         </div>
       </div>
     </div>
@@ -61,20 +101,64 @@
         data: function() {
           return { 
             inputVisible: false,
+            addArticleDialogVisible: false,
             params: {
               search: '',
               tag: '',
               classify: ''
             },
+            articleParams: {
+              name: '',
+              describe: '',
+              url: '',
+              classify: '',
+              tag: [],
+            },
             tagInputValue: '',
             tagArray: [],
-            classifyArray: []
+            classifyArray: [],
+            articleArray: []
           }
         },
         mounted() {
           this.getTags()
+          this.getArticle()
         },
         methods: {
+          addArticle() {
+            this.articleParams.tag = []
+            this.articleParams.classify = ''
+            this.articleParams.name = ''
+            this.articleParams.describe = ''
+            this.articleParams.url = ''
+            this.addArticleDialogVisible = true;
+          },
+          addArticleConfirm() {
+            axios.post('/api/article', this.articleParams).then(res => {
+              console.log("article", res)
+            })
+            this.addArticleDialogVisible = false;
+          },
+          addArticleHandleClose() {
+            this.$confirm('确认关闭？')
+            .then(_ => {
+              this.articleParams.tag = []
+              this.articleParams.classify = ''
+              this.articleParams.name = ''
+              this.articleParams.describe = ''
+              this.articleParams.url = ''
+              this.addArticleDialogVisible = false;
+              done();
+            })
+            .catch(_ => {});
+          },
+
+          async getArticle() {
+            let res = await axios.get('/api/article');
+            if (res.status === 200) {
+              this.articleArray = res.data
+            }
+          },
           async getTags() {
             let res = await axios.get('/api/tag');
             if (res.status === 200) {

@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
-module.exports = (app) => {
+module.exports = app => {
   const { STRING, INTEGER, DATE } = app.Sequelize;
 
-  const User = app.model.define("user", {
+  const User = app.model.define('user', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     name: STRING(30),
     email: STRING(50),

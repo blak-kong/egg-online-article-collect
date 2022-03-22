@@ -6,6 +6,7 @@ module.exports = app => {
   const Tag = app.model.define('tag', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     tag: STRING,
+    number: INTEGER,
     created_at: DATE,
     updated_at: DATE,
     deleted_at: DATE,

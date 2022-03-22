@@ -33,7 +33,7 @@ class ArticleController extends Controller {
     const article = await ctx.model.Article.create({
       name,
       url,
-      tag,
+      tag: tag.join(','),
       classify,
       describe,
     });
